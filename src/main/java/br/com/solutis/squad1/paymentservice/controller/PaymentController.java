@@ -20,4 +20,12 @@ public class PaymentController {
     ){
         paymentService.save(paymentPostDto);
     }
+
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(
+            @RequestBody Long id
+    ) {
+        paymentService.delete(id);
+    }
 }

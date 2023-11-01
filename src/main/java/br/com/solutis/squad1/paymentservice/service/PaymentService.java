@@ -17,5 +17,13 @@ public class PaymentService {
         Payment payment = mapper.postDtoToEntity(paymentPostDto);
 
         paymentRepository.save(payment);
+
+        //Passar a requisição para o mock
+    }
+
+    public void delete(Long id) {
+        Payment payment = paymentRepository.findById(id).get();
+
+        paymentRepository.delete(payment);
     }
 }
