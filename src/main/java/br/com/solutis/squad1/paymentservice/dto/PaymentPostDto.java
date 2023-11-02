@@ -1,4 +1,16 @@
 package br.com.solutis.squad1.paymentservice.dto;
 
-public record PaymentPostDto() {
+import br.com.solutis.squad1.paymentservice.model.entity.enums.FormPayment;
+import jakarta.validation.constraints.NotNull;
+
+import java.math.BigDecimal;
+
+public record PaymentPostDto(
+        @NotNull
+        Long orderId,
+        @NotNull
+        BigDecimal total,
+        @NotNull
+        FormPayment formPaymen
+) {
 }

@@ -1,5 +1,6 @@
 package br.com.solutis.squad1.paymentservice.service;
 
+import br.com.solutis.squad1.paymentservice.dto.PaymentPostCreditCardDto;
 import br.com.solutis.squad1.paymentservice.dto.PaymentPostDto;
 import br.com.solutis.squad1.paymentservice.mapper.PaymentMapper;
 import br.com.solutis.squad1.paymentservice.model.entity.Payment;
@@ -15,6 +16,14 @@ public class PaymentService {
 
     public void save(PaymentPostDto paymentPostDto) {
         Payment payment = mapper.postDtoToEntity(paymentPostDto);
+
+        paymentRepository.save(payment);
+
+        //Passar a requisição para o mock
+    }
+
+    public void saveCreditCard(PaymentPostCreditCardDto paymentPostCreditCardDto) {
+        Payment payment = new Payment(paymentPostCreditCardDto);
 
         paymentRepository.save(payment);
 
