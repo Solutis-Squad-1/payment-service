@@ -2,6 +2,7 @@ package br.com.solutis.squad1.paymentservice.controller;
 
 import br.com.solutis.squad1.paymentservice.dto.PaymentPostCreditCardDto;
 import br.com.solutis.squad1.paymentservice.dto.PaymentPostDto;
+import br.com.solutis.squad1.paymentservice.model.entity.enums.StatusPayment;
 import br.com.solutis.squad1.paymentservice.service.PaymentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,12 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class PaymentController {
     private PaymentService paymentService;
+
+    @PutMapping("/{id}")
+    public void updateStatus(@PathVariable Long id, @RequestBody StatusPayment statusPayment){
+        paymentService.updateStatus(id, statusPayment);
+    }
+
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
