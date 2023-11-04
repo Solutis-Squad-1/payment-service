@@ -7,6 +7,7 @@ import br.com.solutis.squad1.paymentservice.service.PaymentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,12 +17,14 @@ public class PaymentController {
     private final PaymentService paymentService;
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('payment:update:status')")
     public void updateStatus(@PathVariable Long id, @RequestBody StatusPayment statusPayment){
         paymentService.updateStatus(id, statusPayment);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAuthority('payment:create')")
     public void save(
             @RequestBody @Valid PaymentPostDto paymentPostDto
     ){
@@ -30,6 +33,7 @@ public class PaymentController {
 
     @PostMapping("/credit-card")
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAuthority('payment:create:credit-card')")
     public void saveCreditCard(
             @RequestBody @Valid PaymentPostCreditCardDto paymentPostCreditCardDto
     ){
@@ -38,6 +42,7 @@ public class PaymentController {
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('payment:delete')")
     public void delete (
             @RequestBody Long id
     ) {
