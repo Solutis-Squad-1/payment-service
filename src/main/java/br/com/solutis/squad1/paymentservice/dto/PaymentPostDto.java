@@ -11,6 +11,6 @@ public record PaymentPostDto(
         @NotNull
         BigDecimal total,
         @NotNull
-        FormPayment formPaymen
+        FormPayment formPayment
 ) {
 }

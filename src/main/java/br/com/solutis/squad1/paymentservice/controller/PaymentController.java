@@ -13,13 +13,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/payment")
 @RequiredArgsConstructor
 public class PaymentController {
-    private PaymentService paymentService;
+    private final PaymentService paymentService;
 
     @PutMapping("/{id}")
     public void updateStatus(@PathVariable Long id, @RequestBody StatusPayment statusPayment){
         paymentService.updateStatus(id, statusPayment);
     }
-
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -29,7 +28,7 @@ public class PaymentController {
         paymentService.save(paymentPostDto);
     }
 
-    @PostMapping("/CreditCard")
+    @PostMapping("/credit-card")
     @ResponseStatus(HttpStatus.CREATED)
     public void saveCreditCard(
             @RequestBody @Valid PaymentPostCreditCardDto paymentPostCreditCardDto
