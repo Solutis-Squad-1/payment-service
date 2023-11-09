@@ -1,6 +1,7 @@
 package br.com.solutis.squad1.paymentservice.model.entity;
 
 import br.com.solutis.squad1.paymentservice.dto.PaymentPostCreditCardDto;
+import br.com.solutis.squad1.paymentservice.dto.PaymentPostDto;
 import br.com.solutis.squad1.paymentservice.model.entity.enums.FormPayment;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -28,6 +29,12 @@ public class Payment {
     private FormPayment formPayment;
 
     public Payment(PaymentPostCreditCardDto dto){
+        this.orderId = dto.orderId();
+        this.total = dto.total();
+        this.formPayment = dto.formPayment();
+    }
+
+    public Payment(PaymentPostDto dto){
         this.orderId = dto.orderId();
         this.total = dto.total();
         this.formPayment = dto.formPayment();
