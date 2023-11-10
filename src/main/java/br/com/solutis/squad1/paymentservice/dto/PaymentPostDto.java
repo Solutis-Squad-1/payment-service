@@ -7,6 +7,9 @@ import java.math.BigDecimal;
 
 public record PaymentPostDto(
         @NotNull
+        Long userId,
+
+        @NotNull
         Long orderId,
         @NotNull
         BigDecimal total,

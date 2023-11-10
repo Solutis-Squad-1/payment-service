@@ -99,15 +99,16 @@ class PaymentControllerTest {
                 .andExpect(status().isNoContent());
     }
 
-    private PaymentPostDto createPaymentPostDto(){
+    private PaymentPostDto createPaymentPostDto() {
         return new PaymentPostDto(
+                1L,
                 1L,
                 new BigDecimal(200),
                 FormPayment.PIX
         );
     }
 
-    private PaymentPostCreditCardDto createPaymentPostCreditCardDto(){
+    private PaymentPostCreditCardDto createPaymentPostCreditCardDto() {
         return new PaymentPostCreditCardDto(
                 1L,
                 new BigDecimal(200),

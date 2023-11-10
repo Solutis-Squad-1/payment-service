@@ -18,7 +18,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.math.BigDecimal;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -59,20 +58,20 @@ class PaymentServiceTest {
         verify(paymentRepository).findById(paymentId);
         verify(paymentRepository).delete(payment);
     }
-    private Payment createPayment(){
-        return new Payment(
-                createPaymentPostDto()
-        );
+
+    private Payment createPayment() {
+        return mapper.postDtoToEntity(createPaymentPostDto());
     }
 
-    private OrderPutDto createOrderPutDto(){
+    private OrderPutDto createOrderPutDto() {
         return new OrderPutDto(
                 StatusPayment.CONFIRMED
         );
     }
 
-    private PaymentPostDto createPaymentPostDto(){
+    private PaymentPostDto createPaymentPostDto() {
         return new PaymentPostDto(
+                1L,
                 1L,
                 new BigDecimal(200),
                 FormPayment.PIX
