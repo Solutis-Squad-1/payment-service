@@ -3,6 +3,9 @@ package br.com.solutis.squad1.paymentservice.controller;
 import br.com.solutis.squad1.paymentservice.dto.PaymentPostDto;
 import br.com.solutis.squad1.paymentservice.dto.PaymentPutDto;
 import br.com.solutis.squad1.paymentservice.dto.PaymentResponseDto;
+import br.com.solutis.squad1.paymentservice.model.entity.enums.StatusPayment;
+import br.com.solutis.squad1.paymentservice.producer.GatewayProducer;
+import br.com.solutis.squad1.paymentservice.producer.OrderStatusProducer;
 import br.com.solutis.squad1.paymentservice.service.PaymentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class PaymentController {
     private final PaymentService paymentService;
+    private final OrderStatusProducer orderStatusProducer;
+    private final GatewayProducer gatewayProducer;
 
 //    @PutMapping("/{id}/status")
 //    @PreAuthorize("hasAuthority('payment:update:status')")
@@ -42,7 +47,10 @@ public class PaymentController {
     public PaymentResponseDto save(
             @RequestBody @Valid PaymentPostDto paymentPostDto
     ) {
-        return paymentService.save(paymentPostDto);
+        PaymentResponseDto dto = paymentService.save(paymentPostDto);
+        orderStatusProducer.produce(dto.orderId(), StatusPayment.IN_PROCESSING);
+        gatewayProducer.produce(dto.id(), dto.formPayment());
+        return dto;
     }
 
     @PutMapping("/{id}")
