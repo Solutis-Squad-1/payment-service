@@ -20,6 +20,12 @@ public class OrderStatusProducer {
     @Value("${spring.rabbitmq.exchange.order.status}")
     private String orderExchange;
 
+    /**
+     * Sends a message to the order queue
+     *
+     * @param orderId       the order id
+     * @param statusPayment the status payment
+     */
     public void produce(Long orderId, StatusPayment statusPayment) {
         log.info("Update status of order: {} to: {}", orderId, statusPayment);
 

@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @FeignClient("order-service")
 public interface OrderHttpClient {
+    /**
+     * Update order status
+     * @param id
+     * @param order
+     */
     @RequestMapping(method = RequestMethod.PUT, value = "/api/v1/orders/{id}")
     void update(@PathVariable("id") Long id, @RequestBody OrderPutDto order);
 }

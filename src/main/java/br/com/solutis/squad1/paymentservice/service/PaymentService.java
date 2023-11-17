@@ -22,32 +22,64 @@ public class PaymentService {
     private final PaymentMapper paymentMapper;
     private final OrderHttpClient orderHttpClient;
 
+    /**
+     * Find all payments that are not deleted
+     *
+     * @param pageable
+     * @return Page<PaymentResponseDto>
+     */
     public Page<PaymentResponseDto> findAll(Pageable pageable) {
         return paymentRepository.findAllByDeletedFalse(pageable).map(paymentMapper::toResponseDto);
     }
 
+    /**
+     * Save payment
+     *
+     * @param id
+     * @return PaymentResponseDto
+     */
     public PaymentResponseDto save(PaymentPostDto paymentPostDto) {
         Payment payment = paymentMapper.postDtoToEntity(paymentPostDto);
 
         return paymentMapper.toResponseDto(paymentRepository.save(payment));
-
-        //Passar a requisição para o mock via comunicação assíncrona
     }
 
+    /**
+     * Update payment by id and that is not deleted
+     *
+     * @param id
+     */
     public void update(Long id, PaymentPutDto paymentPutDto) {
         Payment payment = paymentRepository.getReferenceById(id);
         payment.update(paymentMapper.putDtoToEntity(paymentPutDto));
     }
 
+    /**
+     * Delete payment by id and that is not deleted
+     *
+     * @param id
+     */
     public void delete(Long id) {
         Payment payment = paymentRepository.getReferenceById(id);
         paymentRepository.delete(payment);
     }
 
+    /**
+     * Update payment status
+     *
+     * @param id
+     * @param statusPayment
+     */
     public void updateStatus(Long id, StatusPayment statusPayment) {
         orderHttpClient.update(id, paymentMapper.StatusPaymentToOrderPutDto(statusPayment));
     }
 
+    /**
+     * Find payment by id and that is not deleted
+     *
+     * @param id
+     * @return PaymentResponseDto
+     */
     public PaymentResponseDto findById(Long id) {
         return paymentMapper.toResponseDto(paymentRepository.findByIdAndDeletedFalse(id).orElseThrow());
     }

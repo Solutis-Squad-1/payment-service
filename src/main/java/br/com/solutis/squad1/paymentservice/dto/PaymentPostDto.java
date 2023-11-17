@@ -5,6 +5,9 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
+/**
+ * PaymentPostDto
+ */
 public record PaymentPostDto(
         @NotNull
         Long userId,

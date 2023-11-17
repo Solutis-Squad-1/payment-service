@@ -29,18 +29,33 @@ public class PaymentController {
 //        paymentService.updateStatus(id, statusPayment);
 //    }
 
+    /**
+     * Find all payments
+     * @param pageable
+     * @return Page<PaymentResponseDto>
+     */
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public Page<PaymentResponseDto> findAll(Pageable pageable) {
         return paymentService.findAll(pageable);
     }
 
+    /**
+     * Find payment by id
+     * @param id
+     * @return PaymentResponseDto
+     */
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('payment:read')")
     public PaymentResponseDto findById(@PathVariable Long id) {
         return paymentService.findById(id);
     }
 
+    /**
+     * Save payment
+     * @param paymentPostDto
+     * @return PaymentResponseDto
+     */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAuthority('payment:create')")
@@ -53,6 +68,11 @@ public class PaymentController {
         return dto;
     }
 
+    /**
+     * Update payment
+     * @param paymentPutDto
+     * @param id
+     */
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('payment:update')")
@@ -63,6 +83,10 @@ public class PaymentController {
         paymentService.update(id, paymentPutDto);
     }
 
+    /**
+     * Delete payment
+     * @param id
+     */
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('payment:delete')")

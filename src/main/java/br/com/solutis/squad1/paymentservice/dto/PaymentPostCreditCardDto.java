@@ -5,6 +5,9 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
+/**
+ * PaymentPostCreditCardDto
+ */
 public record PaymentPostCreditCardDto(
         @NotNull
         Long orderId,

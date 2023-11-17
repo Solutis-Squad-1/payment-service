@@ -20,6 +20,12 @@ public class GatewayProducer {
     @Value("${spring.rabbitmq.exchange.gateway}")
     private String gatewayExchange;
 
+    /**
+     * Sends a message to the gateway queue
+     *
+     * @param paymentId   the payment id
+     * @param formPayment the form payment
+     */
     public void produce(Long paymentId, FormPayment formPayment) {
         log.info("Sending message to queue: {}", gatewayRoutingKey);
 
