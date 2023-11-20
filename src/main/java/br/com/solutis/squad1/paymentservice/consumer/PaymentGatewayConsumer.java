@@ -26,7 +26,7 @@ public class PaymentGatewayConsumer {
      * Consume message from payment gateway queue
      * @param paymentAnalysisDto
      */
-    @RabbitListener(queues = {"spring.rabbitmq.queue.payment.gateway"})
+    @RabbitListener(queues = {"${spring.rabbitmq.queue.payment.gateway}"})
     public void consume(
             @Payload PaymentAnalysisDto paymentAnalysisDto
             ) {

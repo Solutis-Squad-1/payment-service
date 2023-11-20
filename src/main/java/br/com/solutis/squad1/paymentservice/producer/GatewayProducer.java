@@ -30,8 +30,8 @@ public class GatewayProducer {
         log.info("Sending message to queue: {}", gatewayRoutingKey);
 
         rabbitTemplate.convertAndSend(
-                gatewayRoutingKey,
                 gatewayExchange,
+                gatewayRoutingKey,
                 new GatewayDto(paymentId, formPayment)
         );
     }
