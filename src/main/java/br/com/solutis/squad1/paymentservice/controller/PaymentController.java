@@ -7,6 +7,7 @@ import br.com.solutis.squad1.paymentservice.model.entity.enums.StatusPayment;
 import br.com.solutis.squad1.paymentservice.producer.GatewayProducer;
 import br.com.solutis.squad1.paymentservice.producer.OrderStatusProducer;
 import br.com.solutis.squad1.paymentservice.service.PaymentService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,17 +24,12 @@ public class PaymentController {
     private final OrderStatusProducer orderStatusProducer;
     private final GatewayProducer gatewayProducer;
 
-//    @PutMapping("/{id}/status")
-//    @PreAuthorize("hasAuthority('payment:update:status')")
-//    public void updateStatus(@PathVariable Long id, @RequestBody StatusPayment statusPayment){
-//        paymentService.updateStatus(id, statusPayment);
-//    }
-
     /**
      * Find all payments
      * @param pageable
      * @return Page<PaymentResponseDto>
      */
+    @Operation(summary = "Find all payments")
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public Page<PaymentResponseDto> findAll(Pageable pageable) {
@@ -45,6 +41,7 @@ public class PaymentController {
      * @param id
      * @return PaymentResponseDto
      */
+    @Operation(summary = "Find payment by id")
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('payment:read')")
     public PaymentResponseDto findById(@PathVariable Long id) {
@@ -56,6 +53,7 @@ public class PaymentController {
      * @param paymentPostDto
      * @return PaymentResponseDto
      */
+    @Operation(summary = "Save payment")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAuthority('payment:create')")
@@ -73,6 +71,7 @@ public class PaymentController {
      * @param paymentPutDto
      * @param id
      */
+    @Operation(summary = "Update payment")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('payment:update')")
@@ -87,6 +86,7 @@ public class PaymentController {
      * Delete payment
      * @param id
      */
+    @Operation(summary = "Delete payment")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('payment:delete')")
